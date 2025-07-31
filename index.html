@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Signup | Forgot Password</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #111;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 40px 10px 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.3);
+      color: white;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 34px;
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00c6ff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .switch-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .switch-link a {
+      color: #00c6ff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      z-index: 2;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Box -->
+  <div class="container" id="login-box">
+    <h2>Mohit❤️Hub Login</h2>
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="login-username" placeholder="Enter username" required>
+    </div>
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Enter password" required>
+      <span class="toggle-password" onclick="togglePass('login-password')">👁️</span>
+    </div>
+    <button onclick="loginUser()">Login</button>
+    <div class="switch-link">
+      <a onclick="switchToSignup()">Create Account</a> | 
+      <a onclick="switchToForgot()">Forgot Password?</a>
+    </div>
+  </div>
+
+  <!-- Signup Box -->
+  <div class="container" id="signup-box" style="display:none;">
+    <h2>Create Account</h2>
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="signup-username" placeholder="Choose username" required>
+    </div>
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="signup-password" placeholder="Choose password" required>
+      <span class="toggle-password" onclick="togglePass('signup-password')">👁️</span>
+    </div>
+    <button onclick="createAccount()">Create Account</button>
+    <div class="switch-link">
+      Already registered? <a onclick="switchToLogin()">Login</a>
+    </div>
+  </div>
+
+  <!-- Forgot Box -->
+  <div class="container" id="forgot-box" style="display:none;">
+    <h2>Forgot Password</h2>
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="forgot-username" placeholder="Enter your username" required>
+    </div>
+    <button onclick="recoverPassword()">Recover Password</button>
+    <div class="switch-link">
+      <a onclick="switchToLogin()">Back to Login</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>© 2026 Mohit❤️Hub. All rights reserved.</footer>
+
+  <!-- Script -->
+  <script>
+    function togglePass(id) {
+      const field = document.getElementById(id);
+      field.type = field.type === "password" ? "text" : "password";
+    }
+
+    function switchToSignup() {
+      document.getElementById("login-box").style.display = "none";
+      document.getElementById("signup-box").style.display = "block";
+      document.getElementById("forgot-box").style.display = "none";
+    }
+
+    function switchToLogin() {
+      document.getElementById("login-box").style.display = "block";
+      document.getElementById("signup-box").style.display = "none";
+      document.getElementById("forgot-box").style.display = "none";
+    }
+
+    function switchToForgot() {
+      document.getElementById("login-box").style.display = "none";
+      document.getElementById("signup-box").style.display = "none";
+      document.getElementById("forgot-box").style.display = "block";
+    }
+
+    function createAccount() {
+      const username = document.getElementById("signup-username").value.trim();
+      const password = document.getElementById("signup-password").value.trim();
+      if (!username || !password) return alert("⚠️ Fill all fields");
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      if (users.some(u => u.username === username)) return alert("❌ Username exists!");
+
+      users.push({ username, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("✅ Account created!");
+      switchToLogin();
+    }
+
+    function loginUser() {
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      if (!username || !password) return alert("⚠️ Fill both fields");
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      let matched = users.find(u => u.username === username && u.password === password);
+
+      if (matched) {
+        speak("Login successful!");
+        alert("✅ Login successful!");
+        window.location.href = "https://mohitsaxena63.github.io/Mohit-login-outlaw63/";
+      } else {
+        alert("❌ Invalid credentials");
+      }
+    }
+
+    function recoverPassword() {
+      const username = document.getElementById("forgot-username").value.trim();
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      let user = users.find(u => u.username === username);
+      if (user) {
+        alert("🔐 Your password is: " + user.password);
+        switchToLogin();
+      } else {
+        alert("❌ Username not found!");
+      }
+    }
+
+    function speak(text) {
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.lang = "en-US";
+      window.speechSynthesis.speak(msg);
+    }
+  </script>
+
+</body>
+</html>
